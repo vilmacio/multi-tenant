@@ -1,9 +1,17 @@
 import { Controller } from '../protocols/controller'
+import { EmailValidator } from '../protocols/email-validator'
 import { httpRequest, httpResponse } from '../protocols/http'
 
 export class SignUpController implements Controller {
+  private emailValidator: EmailValidator
+
+  constructor (emailValidator:EmailValidator) {
+    this.emailValidator = emailValidator
+  }
+
   async handle (httpRequest: httpRequest):Promise<httpResponse> {
-    const { password, passwordConfirmation } = httpRequest.body
+    const { email, password, passwordConfirmation } = httpRequest.body
+
     const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {
@@ -20,6 +28,8 @@ export class SignUpController implements Controller {
         body: new Error('InvalidParamError: password')
       }
     }
+
+    this.emailValidator.isValid(email)
 
     return {
       statusCode: 200,
