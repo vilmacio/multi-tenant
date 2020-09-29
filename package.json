@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "sucrase-node src/index.ts",
-    "test": "jest --watch --silent --noStackTrace"
+    "test": "jest --watch --silent --noStackTrace",
+    "test:ci": "npm test -- --coverage"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
