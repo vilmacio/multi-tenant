@@ -18,7 +18,7 @@ interface SutTypes {
 
 const makeSut = ():SutTypes => {
   const emailValidatorStub = makeEmailValidator()
-  const sut = new SignUpController(emailValidatorStub)
+  const sut = new SignUpController()
   return {
     sut,
     emailValidatorStub
@@ -95,6 +95,20 @@ describe('SignUp Controller', () => {
       const httpResponse: httpResponse = await sut.handle(httpRequest)
       expect(httpResponse.statusCode).toBe(400)
       expect(httpResponse.body).toEqual(new Error('InvalidParamError: password'))
+    })
+
+    test('Should return 200 on success', async () => {
+      const { sut } = makeSut()
+      const httpRequest: httpRequest = {
+        body: {
+          name: 'any_name',
+          email: 'any_email',
+          password: 'any_password',
+          passwordConfirmation: 'any_password'
+        }
+      }
+      const httpResponse = await sut.handle(httpRequest)
+      expect(httpResponse.statusCode).toBe(200)
     })
   })
 })
