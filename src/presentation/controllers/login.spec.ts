@@ -93,6 +93,13 @@ describe('Login Controller', () => {
     expect(authSpy).toHaveBeenCalledWith(fakeRequest.body.email, fakeRequest.body.password)
   })
 
+  test('Should return 500 if Authentication throws', async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(() => { throw new Error('any_error') })
+    const httpResponse = await sut.handle(fakeRequest)
+    expect(httpResponse).toEqual(serverError(new Error('any_error')))
+  })
+
   test('Should return token if Authentication returns token', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(fakeRequest)
