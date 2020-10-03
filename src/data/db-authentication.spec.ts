@@ -32,4 +32,20 @@ describe('DB Authentication', () => {
     await sut.auth({ email: 'any_email', password: 'any_password' })
     expect(loadByEmailSpy).toHaveBeenCalledWith('any_email')
   })
+
+  test('Should return null if LoadByEmailRepository returns null', async () => {
+    const { sut, loadByEmailRepositoryStub } = makeSut()
+    jest.spyOn(loadByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(null)
+    const token = await sut.auth({ email: 'any_email', password: 'any_password' })
+    expect(token).toBeNull()
+  })
+
+  test('Should throws if LoadByEmailRepository throws', async () => {
+    const { sut, loadByEmailRepositoryStub } = makeSut()
+    jest.spyOn(loadByEmailRepositoryStub, 'loadByEmail').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const promise = sut.auth({ email: 'any_email', password: 'any_password' })
+    await expect(promise).rejects.toThrow()
+  })
 })
