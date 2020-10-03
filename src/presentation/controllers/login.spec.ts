@@ -1,14 +1,14 @@
+import { AuthCredentials, Authentication } from '../../domain/usecases/auth-user'
 import { InvalidParamError } from '../errors/invalid-param'
 import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest, ok, serverError, unauthorized } from '../helpers/http-helper'
-import { Authentication } from '../protocols/authentication'
 import { EmailValidator } from '../protocols/email-validator'
 import { httpRequest } from '../protocols/http'
 import { LoginController } from './login'
 
 const makeAuthentication = () => {
   class AuthenticationStub implements Authentication {
-    async auth (email:string, password:string):Promise<string> {
+    async auth (credentials: AuthCredentials):Promise<string> {
       return 'any_token'
     }
   }
@@ -86,11 +86,15 @@ describe('Login Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error('any_error')))
   })
 
-  test('Should call EmailValidator with correct value', async () => {
+  test('Should call Authentication with correct value', async () => {
     const { sut, authenticationStub } = makeSut()
     const authSpy = jest.spyOn(authenticationStub, 'auth')
     await sut.handle(fakeRequest)
-    expect(authSpy).toHaveBeenCalledWith(fakeRequest.body.email, fakeRequest.body.password)
+    const credentials = {
+      email: fakeRequest.body.email,
+      password: fakeRequest.body.password
+    }
+    expect(authSpy).toHaveBeenCalledWith(credentials)
   })
 
   test('Should return 500 if Authentication throws', async () => {
