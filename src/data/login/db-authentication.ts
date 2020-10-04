@@ -1,7 +1,7 @@
 import { AuthCredentials, Authentication } from '../../domain/usecases/auth-user'
 import { HashComparer } from './protocols/hash-comparer'
 import { LoadByEmailRepository } from './protocols/load-by-email-repository'
-import { Encrypter } from './protocols/update-access-token'
+import { Encrypter } from './protocols/encrypter'
 
 export class DbAuthentication implements Authentication {
     private loadByEmailRepository:LoadByEmailRepository

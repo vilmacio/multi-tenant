@@ -1,6 +1,6 @@
 import { User } from '../../domain/models/user'
 import { DbAuthentication } from './db-authentication'
-import { Encrypter } from './protocols/update-access-token'
+import { Encrypter } from './protocols/encrypter'
 import { HashComparer } from './protocols/hash-comparer'
 import { LoadByEmailRepository } from './protocols/load-by-email-repository'
 
