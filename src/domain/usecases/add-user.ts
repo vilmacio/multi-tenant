@@ -1,6 +1,6 @@
 import { User } from '../models/user'
 
-export interface AddUserModel {
+export type AddUserModel = {
     name: string
     email: string
     password: string
