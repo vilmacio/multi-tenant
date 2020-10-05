@@ -36,4 +36,22 @@ describe('User', () => {
       expect(user.password).toBe(addUserModel.password)
     })
   })
+
+  describe('loadByEmail()', () => {
+    test('Should return a user on success', async () => {
+      const sut = makeSut()
+      const addUserModel:AddUserModel = {
+        name: 'any_name',
+        email: 'any_email',
+        password: 'hashed_password'
+      }
+      const savedUser = await sut.save(addUserModel)
+      const user = await sut.loadByEmail(savedUser.email)
+      expect(user).toBeTruthy()
+      expect(user.id).toBeTruthy()
+      expect(user.name).toBe(addUserModel.name)
+      expect(user.email).toBe(addUserModel.email)
+      expect(user.password).toBe(addUserModel.password)
+    })
+  })
 })
