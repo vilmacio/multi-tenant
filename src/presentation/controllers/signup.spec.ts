@@ -210,7 +210,7 @@ describe('SignUp Controller', () => {
       expect(response).toEqual(serverError(error))
     })
 
-    test('Should return 200 on success', async () => {
+    test('Should return a User on success', async () => {
       const { sut } = makeSut()
       const httpRequest: httpRequest = {
         body: {
@@ -222,6 +222,12 @@ describe('SignUp Controller', () => {
       }
       const httpResponse = await sut.handle(httpRequest)
       expect(httpResponse.statusCode).toBe(200)
+      expect(httpResponse.body).toEqual({
+        id: 'any_id',
+        name: 'any_name',
+        email: 'any_email',
+        password: 'any_password'
+      })
     })
   })
 })
