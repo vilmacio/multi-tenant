@@ -1,14 +1,15 @@
-import express, { Express } from 'express'
+import express, { Express, json } from 'express'
 
 class App {
     public app: Express
 
     constructor () {
       this.app = express()
+      this.middlewares()
     }
 
     middlewares () {
-
+      this.app.use(json())
     }
 
     routes () {
