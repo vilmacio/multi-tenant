@@ -3,6 +3,7 @@ import { AddUser, AddUserModel } from '../../domain/usecases/add-user'
 import { InvalidParamError } from '../errors/invalid-param'
 import { MissingParamError } from '../errors/missing-param-error'
 import { ServerError } from '../errors/server-error'
+import { serverError } from '../helpers/http-helper'
 import { EmailValidator } from '../protocols/email-validator'
 import { httpRequest, httpResponse } from '../protocols/http'
 import { SignUpController } from './signup'
@@ -171,7 +172,7 @@ describe('SignUp Controller', () => {
       expect(httpResponse.body.stack).toEqual('any_stack')
     })
 
-    test('Should call AddUser wuth correct values', async () => {
+    test('Should call AddUser with correct values', async () => {
       const { sut, addUserStub } = makeSut()
       const addSpy = jest.spyOn(addUserStub, 'add')
       const httpRequest: httpRequest = {
@@ -188,6 +189,25 @@ describe('SignUp Controller', () => {
         email: 'any_email',
         password: 'any_password'
       })
+    })
+
+    test('Should return 500 if AddUser throws', async () => {
+      const { sut, addUserStub } = makeSut()
+      const error = new Error()
+      error.stack = 'any_stack'
+      jest.spyOn(addUserStub, 'add').mockImplementationOnce(() => {
+        throw error
+      })
+      const httpRequest: httpRequest = {
+        body: {
+          name: 'any_name',
+          email: 'any_email',
+          password: 'any_password',
+          passwordConfirmation: 'any_password'
+        }
+      }
+      const response = await sut.handle(httpRequest)
+      expect(response).toEqual(serverError(error))
     })
 
     test('Should return 200 on success', async () => {
