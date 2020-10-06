@@ -35,13 +35,13 @@ export class SignUpController implements Controller {
         return badRequest(new InvalidParamError('email'))
       }
 
-      this.addUser.add({
+      const user = await this.addUser.add({
         name,
         email,
         password
       })
 
-      return ok({})
+      return ok(user)
     } catch (error) {
       return serverError(error)
     }
