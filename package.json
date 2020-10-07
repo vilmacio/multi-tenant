@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "sucrase-node src/index.ts",
+    "start": "sucrase-node src/main/server.ts",
     "test": "jest --watch --silent --noStackTrace --runInBand",
     "test:ci": "npm test -- --coverage"
   },

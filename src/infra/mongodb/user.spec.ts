@@ -8,7 +8,7 @@ const makeSut = () => {
 
 describe('User', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URI)
+    await MongoHelper.connect(process.env.MONGO_URL)
   })
 
   afterAll(async () => {
