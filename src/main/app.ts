@@ -1,5 +1,6 @@
-import express, { Express, json } from 'express'
+import express, { Express, json, Router } from 'express'
 import { cors } from './middlewares/cors'
+import routes from './routes/sign'
 
 class App {
     public app: Express
@@ -7,6 +8,7 @@ class App {
     constructor () {
       this.app = express()
       this.middlewares()
+      this.routes()
     }
 
     middlewares () {
@@ -15,7 +17,9 @@ class App {
     }
 
     routes () {
-
+      const router = Router()
+      this.app.use(router)
+      routes(router)
     }
 }
 
