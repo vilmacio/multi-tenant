@@ -51,5 +51,21 @@ describe('Sign Routes', () => {
         .send(credentials)
         .expect(200)
     })
+
+    test('Should return 401 if credentials are invalid', async () => {
+      const password = await hash('1234', 12)
+      await userCollection.insertOne({
+        name: 'any_name',
+        email: 'vilmaciomoura@gmail.com',
+        password
+      })
+      const credentials = {
+        email: 'vilmaciomoura@gmail.com',
+        password: '134'
+      }
+      await request(app).post('/login')
+        .send(credentials)
+        .expect(401)
+    })
   })
 })
