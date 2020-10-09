@@ -1,60 +1,38 @@
-import readline from 'readline-sync'
 import axios from 'axios'
 import { startServer } from './server/server'
-import args from './cli/prompt'
+import args, { getAuthCredentials, getAddUserData } from './cli/prompt'
 import env from '../env'
+import chalk from 'chalk'
+import { AuthCredentials } from './domain/usecases/auth-user'
 
 const api = axios.create({
   baseURL: `http://localhost:${env.PORT}`
 })
 
-async function signUpUser ():Promise<void> {
-  const name = readline.question('Type your name: ')
-  const email = readline.question('Type your email: ')
-  const password = readline.question('Type your password: ', {
-    hideEchoBack: true,
-    mask: '*'
-  })
-  const passwordConfirmation = readline.question('Type your password again: ', {
-    hideEchoBack: true,
-    mask: '*'
-  })
-
-  const data = {
-    name,
-    email,
-    password,
-    passwordConfirmation
-  }
-
+async function signUpUser (data: any):Promise<void> {
   const response = await api.post('/signup', data)
   console.log(response.data)
 }
 
-async function signInUser ():Promise<void> {
-  const email = readline.question('Type your email: ')
-  const password = readline.question('Type your password: ', {
-    hideEchoBack: true,
-    mask: '*'
-  })
-
-  const data = {
-    email,
-    password
+async function logInUser (credentials: AuthCredentials):Promise<void> {
+  try {
+    const response = await api.post('/login', credentials)
+    console.log(chalk.green(`${response.status} ${response.statusText}`) + ` FROM http://127.0.0.1:${env.PORT}`)
+  } catch (err) {
+    console.log(chalk.red(`${err.response.status} ${err.response.statusText}`) + ` FROM http://127.0.0.1:${env.PORT}`)
   }
-
-  const response = await api.post('/login', data)
-  console.log(response.data)
 }
 
 async function build ():Promise<void> {
   await startServer()
 
   if (args.login) {
-    await signInUser()
+    const credentials = await getAuthCredentials()
+    await logInUser(credentials)
   }
   if (args.signup) {
-    await signUpUser()
+    const addUserData = await getAddUserData()
+    await signUpUser(addUserData)
   }
 }
 
