@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rmdir dist /s && ",
-    "start": "sucrase-node src/cli/multi-tenant.ts",
+    "start": "sucrase-node src/multi-tenant.ts",
     "up": "docker-compose up -d",
     "down": "docker-compose down",
     "build": "rmdir dist /s && tsc",
@@ -20,6 +20,7 @@
     "@types/jest": "^26.0.14",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongodb": "^3.5.27",
+    "@types/readline-sync": "^1.4.3",
     "@types/supertest": "^2.0.10",
     "@types/validator": "^13.1.0",
     "@types/yargs": "^15.0.8",
@@ -43,6 +44,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
+    "readline-sync": "^1.4.10",
     "validator": "^13.1.17",
     "yargs": "^16.0.3"
   }
