@@ -4,7 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "clean":"rmdir dist /s && ",
+    "start": "node dist/src/main/server",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down",
+    "build": "rmdir dist /s && tsc",
     "test": "jest --watch --silent --noStackTrace --runInBand",
     "test:ci": "npm test -- --coverage"
   },
