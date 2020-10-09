@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "clean":"rmdir dist /s && ",
-    "start": "node dist/src/main/server",
+    "clean": "rmdir dist /s && ",
+    "start": "sucrase-node src/cli/multi-tenant.ts",
     "up": "docker-compose up -d",
     "down": "docker-compose down",
     "build": "rmdir dist /s && tsc",
@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
+    "@types/axios": "^0.14.0",
     "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.8",
     "@types/jest": "^26.0.14",
@@ -21,6 +22,7 @@
     "@types/mongodb": "^3.5.27",
     "@types/supertest": "^2.0.10",
     "@types/validator": "^13.1.0",
+    "@types/yargs": "^15.0.8",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "eslint": "^7.10.0",
@@ -36,10 +38,12 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
-    "validator": "^13.1.17"
+    "validator": "^13.1.17",
+    "yargs": "^16.0.3"
   }
 }
