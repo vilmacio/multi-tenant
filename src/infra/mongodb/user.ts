@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb'
 import { LoadByIdRepository } from '../../data/authorization/protocols/load-by-id-repository'
 import { LoadByEmailRepository } from '../../data/login/protocols/load-by-email-repository'
 import { SaveUserRepository } from '../../data/signup/protocols/save-user-repository'
@@ -24,7 +25,7 @@ export class UserMongoRepository implements SaveUserRepository, LoadByEmailRepos
 
   async loadById (id:string):Promise<User> {
     const userCollection = MongoHelper.getCollection('users')
-    const result = await userCollection.findOne({ _id: id })
+    const result = await userCollection.findOne({ _id: new ObjectId(id) })
     const { _id, ...account } = result
     account.id = _id
     return account

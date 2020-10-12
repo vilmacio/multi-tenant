@@ -8,13 +8,13 @@ export const middlewareAdapter = (middleware: Middleware) => {
       body: req.body,
       headers: req.headers
     }
-
-    const httResponse:httpResponse = await middleware.handle(httpRequest)
-    if (httResponse.statusCode === 200) {
+    const httpResponse:httpResponse = await middleware.handle(httpRequest)
+    if (httpResponse.statusCode === 200) {
+      req.body = httpResponse.body
       next()
     } else {
-      res.status(httResponse.statusCode).json({
-        error: httResponse.body
+      res.status(httpResponse.statusCode).json({
+        error: httpResponse.body
       })
     }
   }
