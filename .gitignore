@@ -4,3 +4,4 @@ globalConfig.json
 dist
 /data
 script.js
+script.ts
