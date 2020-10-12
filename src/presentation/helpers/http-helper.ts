@@ -1,3 +1,4 @@
+import { AccessDeniedError } from '../errors/access-denied'
 import { ServerError } from '../errors/server-error'
 import { UnauthorizedError } from '../errors/unauthorized'
 import { httpResponse } from '../protocols/http'
@@ -13,6 +14,13 @@ export const unauthorized = ():httpResponse => {
   return {
     statusCode: 401,
     body: new UnauthorizedError()
+  }
+}
+
+export const forbidden = ():httpResponse => {
+  return {
+    statusCode: 403,
+    body: new AccessDeniedError()
   }
 }
 
