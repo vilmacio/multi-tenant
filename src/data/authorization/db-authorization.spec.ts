@@ -71,6 +71,15 @@ describe('Authorization Use Case', () => {
     expect(response).toBeNull()
   })
 
+  test('Should throw if LoadByIdRepository throws', async () => {
+    const { sut, loadByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadByIdRepositoryStub, 'loadById').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const promise = sut.authorize('acces_token')
+    await expect(promise).rejects.toThrow()
+  })
+
   test('Should return a user on success', async () => {
     const { sut } = makeSut()
     const user = await sut.authorize('access_token')
