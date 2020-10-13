@@ -3,5 +3,6 @@ coverage
 globalConfig.json
 dist
 /data
+/cache
 script.js
 script.ts
