@@ -11,6 +11,26 @@ The distinction between the customers is achieved during application design, thu
 After cloning and installing dependencies, run the code:
 ### Running with Docker
 ```console
-admin:~$ yarn up
+admin:~$ yarn up --accessTag
 ```
 See [```/package.json```](/package.json) file for more commands.
+
+## Usage
+### Access tags
+First you'll need to use the ```--signup``` tag to create a new tenant.
+```console
+admin:~$ yarn up --signup
+```
+You can now login to view your profile. Use ```--login``` tag.
+```console
+admin:~$ yarn up --signup
+```
+
+Use the ```--help``` tag for more tags and explanations.
+
+## License
+This project is under the MIT license. See the [LICENSE](https://github.com/vilmacio/multi-tenant/blob/master/LICENSE) for more information.
+
+---
+
+Created by [vilmacio](https://github.com/vilmacio)
