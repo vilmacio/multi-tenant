@@ -12,8 +12,12 @@ const api = axios.create({
 })
 
 async function signUpUser (data: any):Promise<void> {
-  const response = await api.post('/signup', data)
-  console.log(response.data)
+  await api.post('/signup', data)
+  const credentials = {
+    email: data.email,
+    password: data.password
+  }
+  await logInUser(credentials)
 }
 
 async function logInUser (credentials: AuthCredentials):Promise<void> {
@@ -38,8 +42,9 @@ async function profile () {
     console.log('===== MY PROFILE =====')
     console.log(`Name: ${response.data.name}`)
     console.log(`Email: ${response.data.email}`)
+    console.log('')
   } catch (err) {
-    console.log(chalk.red(`${err.response.status} ${err.response.statusText}`) + ` FROM ${err.response.config.baseURL}${err.response.config.url}`)
+    console.log(chalk.red(`${err.response.status} ${err.response.statusText}`) + ` FROM ${err.response.config.baseURL}${err.response.config.url}\n`)
   }
 }
 
