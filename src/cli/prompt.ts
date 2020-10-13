@@ -10,6 +10,10 @@ yargs.option('login', {
   description: 'Login to the application'
 })
 
+yargs.option('logout', {
+  description: 'Logout to the application'
+})
+
 export async function getAuthCredentials ():Promise<AuthCredentials> {
   const email = readline.question('Type your email: ')
   const password = readline.question('Type your password: ', {
