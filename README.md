@@ -23,7 +23,7 @@ admin:~$ yarn up --signup
 ```
 You can now login to view your profile. Use ```--login``` tag.
 ```console
-admin:~$ yarn up --signup
+admin:~$ yarn up --login
 ```
 
 Use the ```--help``` tag for more tags and explanations.
